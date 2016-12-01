@@ -5,14 +5,14 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 /**
- * 自定义参数配置
+ * 自定义参数注入
  * @author Alan Liu
  * Created by on 2016/11/26 0026.
  */
 @Component
 public class BaseConfig {
 
-    @Value("${com.venus.config.project.name}")
+    @Value("${com.venus.config.project.name:Test}")
     private String name;
     @Value("${com.venus.config.project.version}")
     private String version;

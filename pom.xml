@@ -35,16 +35,40 @@
       <artifactId>spring-boot-starter-web</artifactId>
     </dependency>
 
+    <!-- servlet依赖. -->
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>javax.servlet-api</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>jstl</artifactId>
+    </dependency>
+
+    <!-- tomcat的支持.-->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-tomcat</artifactId>
+      <scope>provided</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.tomcat.embed</groupId>
+      <artifactId>tomcat-embed-jasper</artifactId>
+      <scope>provided</scope>
+    </dependency>
+
   </dependencies>
 
-  <build>
+ <!-- <build>
     <plugins>
-      <!--添加此plugin，package 打成可执行的jar包-->
+      &lt;!&ndash;添加此plugin，package 打成可执行的jar包&ndash;&gt;
       <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
       </plugin>
     </plugins>
-  </build>
+  </build>-->
 
 </project>
