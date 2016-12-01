@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class BaseConfig {
 
+    //获取不到配置的值，默认赋值Test
     @Value("${com.venus.config.project.name:Test}")
     private String name;
     @Value("${com.venus.config.project.version}")
