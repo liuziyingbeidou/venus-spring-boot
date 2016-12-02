@@ -16,8 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * 2.@SpringBootApplication same as @Configuration @EnableAutoConfiguration @ComponentScan
  */
 
-@ComponentScan
-@EnableAutoConfiguration
+@SpringBootApplication
 public class AppVenus
 {
     public static void main( String[] args )
