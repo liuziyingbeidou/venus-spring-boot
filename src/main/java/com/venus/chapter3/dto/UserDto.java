@@ -1,10 +1,12 @@
 package com.venus.chapter3.dto;
 
+import java.io.Serializable;
+
 /**
  * 用户实体类
  * Created by Alan Liu on 2016/12/2 0002.
  */
-public class UserDto {
+public class UserDto implements Serializable {
 
     private int id;
     private String uName;

@@ -2,10 +2,16 @@ package com.venus.chapter3.service.impl;
 
 import com.venus.chapter3.dto.UserDto;
 import com.venus.chapter3.service.UserService;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.ColumnMapRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 用户接口实现类
@@ -25,7 +31,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void deleteByName(String name) {
-        jdbcTemplate.update("delete from vns_user where u_name = ?", name);
+        Integer count = jdbcTemplate.update("delete from vns_user where u_name = ?", name);
+        System.out.print("delete :"+count);
     }
 
     @Override
@@ -36,5 +43,19 @@ public class UserServiceImpl implements UserService {
     @Override
     public void deleteAllUsers() {
         jdbcTemplate.update("delete from vns_user");
+    }
+
+    @Override
+    public List<UserDto> queryUsers() {
+        RowMapper<UserDto> rm = BeanPropertyRowMapper.newInstance(UserDto.class);
+        List<UserDto> userList = jdbcTemplate.query("select * from vns_user",rm);
+        return userList;
+    }
+
+    @Override
+    public UserDto queryUserByName(String name) {
+        RowMapper<UserDto> rm = BeanPropertyRowMapper.newInstance(UserDto.class);
+        UserDto userDto = (UserDto) jdbcTemplate.queryForObject("select * from vns_user where u_name = ?",rm,name);
+        return userDto;
     }
 }

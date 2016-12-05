@@ -2,6 +2,8 @@ package com.venus.chapter3.service;
 
 import com.venus.chapter3.dto.UserDto;
 
+import java.util.List;
+
 /**
  * 用户Service接口
  * Created by Alan Liu on 2016/12/2 0002.
@@ -29,5 +31,18 @@ public interface UserService {
      * 删除所有用户
      */
     void deleteAllUsers();
+
+    /**
+     * 查询所有用户
+     * @return
+     */
+    List<UserDto> queryUsers();
+
+    /**
+     * 根据用户名查询
+     * @param name
+     * @return
+     */
+    UserDto queryUserByName(String name);
 
 }
