@@ -9,6 +9,7 @@ import java.io.Serializable;
 public class UserDto implements Serializable {
 
     private int id;
+    private String uCode;
     private String uName;
     private int uAge;
 
@@ -18,6 +19,14 @@ public class UserDto implements Serializable {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getuCode() {
+        return uCode;
+    }
+
+    public void setuCode(String uCode) {
+        this.uCode = uCode;
     }
 
     public String getuName() {

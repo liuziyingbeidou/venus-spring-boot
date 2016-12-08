@@ -1,5 +1,6 @@
 package com.venus.chapter3.controller;
 
+import com.google.common.collect.Lists;
 import com.venus.chapter3.dto.UserDto;
 import com.venus.chapter3.service.UserService;
 import io.swagger.annotations.ApiImplicitParam;
@@ -11,7 +12,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import java.time.Clock;
+import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Created by Alan Liu on 2016/12/2 0002.
@@ -42,7 +46,7 @@ public class UserController {
     }
 
     @ApiOperation(value="根据用户名删除用户", notes="")
-    @RequestMapping(value={"/deleteByName"}, method=RequestMethod.GET)
+    @RequestMapping(value={"/deleteByName"}, method=RequestMethod.POST)
     @ResponseBody
     public String deleteByName(@RequestBody String uName) {
         userService.deleteByName(uName);
@@ -61,5 +65,20 @@ public class UserController {
     @ResponseBody
     public UserDto getUserByName(@RequestBody String uName) {
         return userService.queryUserByName(uName);
+    }
+
+    @ApiOperation(value="批量插入用户", notes="")
+    @RequestMapping(value={"/batchInsertUsers"}, method=RequestMethod.POST)
+    @ResponseBody
+    public Integer batchInsertUsers(@RequestBody Integer count) {
+        List<UserDto> listUser = Lists.newArrayList();
+        for(int i = 0; i < count ; i++){
+            UserDto userDto = new UserDto();
+            userDto.setuCode("YH"+ Clock.systemUTC().millis());
+            userDto.setuName("张小_"+i);
+            userDto.setuAge(20+i);
+            listUser.add(userDto);
+        }
+        return userService.batchInsertUsers(listUser);
     }
 }

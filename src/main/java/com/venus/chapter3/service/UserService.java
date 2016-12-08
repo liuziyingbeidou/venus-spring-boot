@@ -45,4 +45,11 @@ public interface UserService {
      */
     UserDto queryUserByName(String name);
 
+    /**
+     * 批量插入用户
+     * @param listUser
+     * @return
+     */
+    Integer batchInsertUsers(List<UserDto> listUser);
+
 }
