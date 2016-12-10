@@ -3,6 +3,7 @@ package com.venus.chapter3.controller;
 import com.google.common.collect.Lists;
 import com.venus.chapter3.dto.UserDto;
 import com.venus.chapter3.service.UserService;
+import com.venus.chapter3.utils.UUIDGenerator;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.stereotype.Controller;
@@ -16,6 +17,7 @@ import java.time.Clock;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
+import java.util.UUID;
 
 /**
  * Created by Alan Liu on 2016/12/2 0002.
@@ -72,10 +74,12 @@ public class UserController {
     @ResponseBody
     public Integer batchInsertUsers(@RequestBody Integer count) {
         List<UserDto> listUser = Lists.newArrayList();
+        UserDto userDto;
         for(int i = 0; i < count ; i++){
-            UserDto userDto = new UserDto();
-            userDto.setuCode("YH"+ Clock.systemUTC().millis());
-            userDto.setuName("张小_"+i);
+            userDto = new UserDto();
+            System.out.println("==="+UUIDGenerator.getUUID());
+            userDto.setuCode(UUIDGenerator.getUUID());
+            userDto.setuName("Mary_"+i);
             userDto.setuAge(20+i);
             listUser.add(userDto);
         }

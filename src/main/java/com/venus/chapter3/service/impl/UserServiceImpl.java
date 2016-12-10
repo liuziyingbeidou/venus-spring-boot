@@ -2,8 +2,12 @@ package com.venus.chapter3.service.impl;
 
 import com.venus.chapter3.dto.UserDto;
 import com.venus.chapter3.service.UserService;
-import org.springframework.jdbc.core.*;
+import org.springframework.jdbc.core.BatchPreparedStatementSetter;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.sql.PreparedStatement;
@@ -11,6 +15,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 
 /**
  * 用户接口实现类
@@ -48,6 +53,7 @@ public class UserServiceImpl implements UserService {
     public List<UserDto> queryUsers() {
         RowMapper<UserDto> rm = BeanPropertyRowMapper.newInstance(UserDto.class);
         List<UserDto> userList = jdbcTemplate.query("select * from vns_user",rm);
+        userList = jdbcTemplate.queryForList("select * from vns_user",UserDto.class);
         return userList;
     }
 
@@ -59,9 +65,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public Integer batchInsertUsers(List<UserDto> listUser) {
         String sql = "insert vns_user(u_code,u_name,u_age) values(?,?,?)";
-        jdbcTemplate.batchUpdate(sql,new BatchPreparedStatementSetter()
+        jdbcTemplate.batchUpdate(sql,setParameters(listUser));
+        /*jdbcTemplate.batchUpdate(sql,new BatchPreparedStatementSetter()
         {
             public void setValues(PreparedStatement ps, int i)throws SQLException
             {
@@ -76,7 +84,20 @@ public class UserServiceImpl implements UserService {
             {
                 return listUser.size();
             }
-        });
+        });*/
         return 0;
+    }
+
+    /**
+     * 设置参预置数
+     * @param listUser
+     * @return
+     */
+    private List<Object[]> setParameters(List<UserDto> listUser){
+        List<Object[]> parameters = new ArrayList<Object[]>();
+        for (UserDto u : listUser) {
+            parameters.add(new Object[] { u.getuCode(),u.getuName(),u.getuAge()});
+        }
+        return parameters;
     }
 }
